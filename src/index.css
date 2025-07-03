@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@import "@radix-ui/themes/styles.css";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
+@theme {
+  --font-grotesk: "Space Grotesk", sans-serif;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+div,
+p {
+  font-family: "Space Grotesk", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.copied-tooltip {
+  @apply absolute -bottom-7 left-1/2 -translate-x-1/2 bg-green-600 text-xs px-2 py-1 rounded text-gray-100;
+}
