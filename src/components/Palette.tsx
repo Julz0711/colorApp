@@ -137,7 +137,7 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
       </div>
       {/* Full palette code snippet below the palette */}
       <Card variant="surface" size="3" className="w-128">
-        <p className="text-white text-md mb-4">Or copy the entire snippet:</p>
+        <p className="text-white text-md mb-4">Copy the entire snippet here:</p>
         <Code
           variant="soft"
           className="w-full rounded-lg px-4 py-3 text-sm flex items-center gap-2 relative font-code"
