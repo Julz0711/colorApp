@@ -51,9 +51,7 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
             size="5"
           >
             <span>@theme {"{"}</span>
-            <span className="text-gray-400 ml-6">
-              //add custom colours here
-            </span>
+            <span className="text-gray-400 ml-6">//add custom colors here</span>
             <span>{"}"}</span>
             <CopyButton
               onClick={handleSnippetCopy}

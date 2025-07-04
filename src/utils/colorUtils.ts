@@ -91,7 +91,7 @@ function hslToHex(h: number, s: number, l: number) {
 // Generate a css theme snippet for custom colors
 export function generateTailwindThemeSnippet(
   colors: string[],
-  prefix = "custom"
+  prefix = "color"
 ): string {
   const colorObj = colors.reduce((acc, color, idx) => {
     acc[`${prefix}-${idx + 1}`] = color;

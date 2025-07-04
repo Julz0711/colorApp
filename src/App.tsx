@@ -56,7 +56,7 @@ export default function App() {
           {/* AI Prompt Area */}
           <Card variant="surface" size="3" className="w-3xl">
             <p className="mb-2">
-              Describe your colour palette in a short sentence:
+              Describe your color palette in a short sentence:
             </p>
             <div className="flex flex-row gap-4">
               <input
