@@ -4,7 +4,7 @@ import { generateRandomPalette } from "./utils/colorUtils";
 import { fetchPaletteFromDeepSeek } from "./utils/deepseek";
 import { fetchPaletteFromGrokMini } from "./utils/grokmini";
 import "./App.css";
-import { Box, Button, Card, Container, Spinner } from "@radix-ui/themes";
+import { Box, Button, Card, Spinner } from "@radix-ui/themes";
 
 export default function App() {
   const [colors, setColors] = useState<string[]>(generateRandomPalette());
@@ -94,6 +94,7 @@ export default function App() {
               onClick={handleGenerate}
               disabled={loading}
               className="w-full"
+              color="blue"
             >
               Random
             </Button>

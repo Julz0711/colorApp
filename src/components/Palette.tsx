@@ -1,6 +1,6 @@
 import { Glow } from "@codaworks/react-glow";
 import React, { useState } from "react";
-import { ClipboardIcon } from "@radix-ui/react-icons";
+import { ClipboardIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Box, Card, Code } from "@radix-ui/themes";
 import { generateTailwindThemeSnippet } from "../utils/colorUtils";
 import CopyButton from "./CopyButton";
@@ -26,37 +26,35 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
     const snippet = `@theme {\n  //add custom coulors here\n}`;
     navigator.clipboard.writeText(snippet);
     setSnippetCopied(true);
-    setTimeout(() => setSnippetCopied(false), 1200);
+    setTimeout(() => setSnippetCopied(false), 2000);
   };
 
   const handleAllSnippetCopy = () => {
     const snippet = generateTailwindThemeSnippet(colors);
     navigator.clipboard.writeText(snippet);
     setAllSnippetCopied(true);
-    setTimeout(() => setAllSnippetCopied(false), 2500);
+    setTimeout(() => setAllSnippetCopied(false), 2000);
   };
 
   return (
     <Box>
       <Card variant="surface" size="3" className="w-128">
-        <div className="flex flex-col items-center justify-center w-full font-code">
+        <div className="flex flex-col items-center justify-center w-full">
           <div className="text-white text-md mb-4">
             Use this snippet in your main CSS file for declaring custom tailwind
             classes:
           </div>
           <Code
             variant="soft"
-            className="w-full rounded-lg px-4 py-3 text-sm flex items-center gap-2 relative font-code"
+            className="w-full rounded-lg px-4 py-3 text-sm flex flex-col gap-0 items-start relative"
             color="pink"
             size="5"
           >
-            <div className="flex flex-col items-start gap-2">
-              <span>@theme {"{"}</span>
-              <span className="text-gray-400 ml-6">
-                //add custom colours here
-              </span>
-              <span>{"}"}</span>
-            </div>
+            <span>@theme {"{"}</span>
+            <span className="text-gray-400 ml-6">
+              //add custom colours here
+            </span>
+            <span>{"}"}</span>
             <CopyButton
               onClick={handleSnippetCopy}
               title="Copy snippet"
@@ -92,7 +90,7 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
                     style={{ background: "none" }}
                   >
                     {copiedIndex === idx ? (
-                      <>Copied!</>
+                      <CheckIcon className="inline w-7 h-8" />
                     ) : (
                       <>
                         Copy
@@ -104,10 +102,10 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
               </div>
             </Glow>
             {/* Code snippet area below each color */}
-            <div className="w-full flex justify-center mt-4 font-code">
+            <div className="w-full flex justify-center mt-4">
               <Code
                 variant="soft"
-                className="rounded px-3 py-1 flex items-center gap-2 font-code"
+                className="rounded px-3 py-1 flex items-center gap-2"
                 color="pink"
                 size="3"
               >
@@ -151,11 +149,7 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
             onClick={handleAllSnippetCopy}
             title="Copy full palette snippet"
           />
-          {allSnippetCopied && (
-            <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 bg-black bg-opacity-80 text-xs px-2 py-1 rounded text-white animate-fade-in">
-              Copied!
-            </span>
-          )}
+          {allSnippetCopied && <span className="copied-tooltip">Copied!</span>}
         </Code>
       </Card>
     </Box>
