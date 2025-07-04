@@ -19,7 +19,7 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
   const handleCopy = (color: string, idx: number) => {
     navigator.clipboard.writeText(color);
     setCopiedIndex(idx);
-    setTimeout(() => setCopiedIndex(null), 1200);
+    setTimeout(() => setCopiedIndex(null), 1500);
   };
 
   const handleSnippetCopy = () => {
@@ -65,21 +65,26 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
       <div className="flex flex-row gap-8 w-full items-center justify-left my-8">
         {colors.map((color, idx) => (
           <div key={idx} className="flex flex-col items-center">
-            <Glow color="red">
+            <Card
+              variant="surface"
+              className={`glow:text-glow/50 glow:bg-red-500 h-64 z-90 rounded-xl flex flex-col items-center justify-center text-white font-semibold hover:cursor-pointer relative group`}
+              style={{
+                width: "9vw",
+                minWidth: "40px",
+                maxWidth: "200x",
+              }}
+              onClick={() => handleCopy(color, idx)}
+              onMouseEnter={() => setHoveredIndex(idx)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
               <div
-                className={`glow:text-glow/50 glow:bg-red-500 h-64 rounded-xl flex flex-col items-center justify-center text-white font-semibold inset-shadow-xl transition-all duration-200 border-8 border-[#131313] ring-1 ring-gray-700 hover:ring-gray-100 hover:ring-3 hover:cursor-pointer relative group`}
+                className="w-full h-full flex items-center justify-center transition-all duration-200 relative rounded-sm"
                 style={{
                   backgroundColor: color,
                   opacity: hoveredIndex === idx ? 0.5 : 1,
-                  width: "9vw",
-                  minWidth: "40px",
-                  maxWidth: "200x",
                 }}
-                onClick={() => handleCopy(color, idx)}
-                onMouseEnter={() => setHoveredIndex(idx)}
-                onMouseLeave={() => setHoveredIndex(null)}
               >
-                <span className="w-full text-center text-shadow-md text-md py-1 rounded-b-lg text-white flex-1 flex items-center justify-center">
+                <span className="text-center absolute z-90 text-md rounded-b-lg text-white flex-1 flex items-center justify-center">
                   {color}
                 </span>
                 {(hoveredIndex === idx || copiedIndex === idx) && (
@@ -98,7 +103,7 @@ export const Palette: React.FC<PaletteProps> = ({ colors }) => {
                   </span>
                 )}
               </div>
-            </Glow>
+            </Card>
             {/* Code snippet area below each color */}
             <div className="w-full flex justify-center mt-4">
               <Code
