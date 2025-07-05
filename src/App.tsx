@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Palette } from "./components/Palette";
 import { generateRandomPalette } from "./utils/colorUtils";
-import { fetchPaletteFromDeepSeek } from "./utils/deepseek";
+//import { fetchPaletteFromDeepSeek } from "./utils/deepseek";
 import { fetchPaletteFromGrokMini } from "./utils/grokmini";
 import { fetchPaletteFromO4Mini } from "./utils/o4mini";
 import "./App.css";
