@@ -3,6 +3,7 @@ import { Palette } from "./components/Palette";
 import { generateRandomPalette } from "./utils/colorUtils";
 import { fetchPaletteFromDeepSeek } from "./utils/deepseek";
 import { fetchPaletteFromGrokMini } from "./utils/grokmini";
+import { fetchPaletteFromO4Mini } from "./utils/o4mini";
 import "./App.css";
 import { Box, Button, Card, Spinner } from "@radix-ui/themes";
 
@@ -23,22 +24,24 @@ export default function App() {
     setError(null);
     setAiUsed(null);
     try {
-      // Try DeepSeek first
-      const aiColors = await fetchPaletteFromDeepSeek(
+      // Try O4 Mini first
+      const aiColors = await fetchPaletteFromO4Mini(
         `Theme description: ${input.trim()}`
       );
       setColors(aiColors);
-      setAiUsed("DeepSeek");
+      setAiUsed("O4-Mini");
     } catch (e: any) {
-      // If DeepSeek fails (rate limit, etc), fallback to Grok Mini
+      console.error("O4-Mini error:", e);
+      // If O4 Mini fails, fallback to Grok Mini
       try {
         const aiColors = await fetchPaletteFromGrokMini(
           `Theme description: ${input.trim()}`
         );
         setColors(aiColors);
         setAiUsed("Grok-3-Mini");
-        setError("DeepSeek rate limit reached. Used Grok-3-Mini as fallback.");
+        setError("O4-Mini failed. Used Grok-3-Mini as fallback.");
       } catch (e2: any) {
+        console.error("Grok-3-Mini error:", e2);
         setError(e2.message || "AI error");
       }
     } finally {
