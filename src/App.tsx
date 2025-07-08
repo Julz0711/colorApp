@@ -7,12 +7,25 @@ import { fetchPaletteFromO4Mini } from "./utils/o4mini";
 import "./App.css";
 import { Box, Button, Card, Spinner } from "@radix-ui/themes";
 
+// Simple toast component
+function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  return (
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-4 animate-fade-in">
+      <span>{message}</span>
+      <button onClick={onClose} className="ml-2 text-white font-bold">
+        ×
+      </button>
+    </div>
+  );
+}
+
 export default function App() {
   const [colors, setColors] = useState<string[]>(generateRandomPalette());
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [aiUsed, setAiUsed] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   const handleGenerate = () => {
     setColors(generateRandomPalette());
@@ -32,6 +45,11 @@ export default function App() {
       setAiUsed("O4-Mini");
     } catch (e: any) {
       console.error("O4-Mini error:", e);
+      if (e?.message?.includes("429")) {
+        setToast(
+          "AI is not responding at the moment (rate limited). Please try again in a minute."
+        );
+      }
       // If O4 Mini fails, fallback to Grok Mini
       try {
         const aiColors = await fetchPaletteFromGrokMini(
@@ -89,6 +107,12 @@ export default function App() {
                 )}
               </Button>
             </div>
+            {aiUsed && (
+              <div className="text-xs text-gray-400 mt-2">
+                AI used: {aiUsed}
+              </div>
+            )}
+            {toast && <Toast message={toast} onClose={() => setToast(null)} />}
             <hr className="text-gray-700 my-4"></hr>
             <p className="mb-2">Or generate a random palette:</p>
             <Button
@@ -105,9 +129,6 @@ export default function App() {
         </div>
         {error && <div className="text-red-400 mb-4">{error}</div>}
         <Palette colors={colors} />
-        {aiUsed && (
-          <div className="text-xs text-gray-400 mb-2">AI used: {aiUsed}</div>
-        )}
       </div>
     </Box>
   );
